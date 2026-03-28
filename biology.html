@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OMNI | Biology System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800;900&display=swap');
+        :root { --mustard: #F4D35E; --purple: #878CD8; --raspberry: #AB273C; --charcoal: #1e293b; }
+        
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--mustard); color: var(--charcoal); margin: 0; display: flex; height: 100vh; overflow: hidden; }
+
+        /* RESOURCE SIDEBAR */
+        .resource-nav { width: 280px; background: white; border-right: 4px solid var(--charcoal); padding: 40px 20px; display: flex; flex-direction: column; gap: 10px; }
+        .resource-btn { 
+            padding: 15px 25px; border-radius: 40px; border: 2px solid transparent; 
+            font-weight: 800; text-transform: uppercase; font-size: 11px; letter-spacing: 1px;
+            cursor: pointer; transition: 0.2s; text-align: left;
+        }
+        .resource-btn:hover { background: var(--mustard); color: var(--charcoal); }
+        .resource-btn.active { background: var(--raspberry); color: white; border-color: var(--charcoal); box-shadow: 4px 4px 0px var(--charcoal); }
+
+        /* MAIN CONTENT AREA */
+        .main-content { flex-grow: 1; padding: 60px; overflow-y: auto; background: var(--mustard); }
+        .unit-card { 
+            background: white; border: 3px solid var(--charcoal); padding: 30px; 
+            border-radius: 50px; box-shadow: 8px 8px 0px var(--purple); 
+            transition: 0.3s; cursor: pointer;
+        }
+        .unit-card:hover { transform: translateY(-5px); box-shadow: 12px 12px 0px var(--raspberry); }
+        
+        .back-hub { font-weight: 900; text-transform: uppercase; font-size: 10px; margin-bottom: 40px; display: inline-block; border-bottom: 2px solid var(--charcoal); }
+    </style>
+</head> 
+    <script src="gloobie.js"></script>
+    <script>
+        function switchResource(type, btn) {
+            document.getElementById('resource-title').innerText = type;
+            document.querySelectorAll('.resource-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function loadContent(unitNumber) {
+            // This is where we will eventually load the actual articles
+            alert("Loading Content for Unit " + unitNumber);
+        }
+    </script>
+    <script src="gloobie.js"></script>
+</body>
+</html>
+<body>
+
+    <aside class="resource-nav">
+        <div class="mb-10 px-4">
+            <h2 class="font-black text-2xl italic tracking-tighter">BIOLOGY</h2>
+            <p class="text-[8px] uppercase font-black text-slate-400 tracking-widest">Global Curriculum G9</p>
+        </div>
+        <div class="resource-btn active" onclick="switchResource('Articles', this)">📄 Articles</div>
+        <div class="resource-btn" onclick="switchResource('Informational Resources', this)">📚 Info Resources</div>
+        <div class="resource-btn" onclick="switchResource('Videos', this)">🎥 Videos</div>
+        <div class="resource-btn" onclick="switchResource('Practice Quizzes', this)">✍️ Practice Quizzes</div>
+        <div class="resource-btn" onclick="switchResource('Tests', this)">🏁 Tests</div>
+        <div class="resource-btn" onclick="switchResource('Study Guides', this)">📓 Study Guides</div>
+        
+        <div id="google_translate_element" class="mt-auto"></div>
+    </aside>
+
+    <main class="main-content">
+        <a href="index.html" class="back-hub">← Exit to Hub</a>
+        
+        <header class="mb-12">
+            <h1 id="resource-title" class="text-6xl font-black uppercase italic leading-none">Articles</h1>
+            <p class="font-bold text-slate-600 mt-2 uppercase tracking-widest text-xs">Select a unit to begin reading.</p>
+        </header>
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="unit-grid">
+            <div class="unit-card" onclick="loadContent(1)">
+                <span class="text-[9px] font-black uppercase text-slate-400 tracking-widest">Unit 01</span>
+                <h3 class="text-xl font-black mt-1 uppercase italic">Cell Biology</h3>
+                <p class="text-[10px] font-bold text-slate-500 mt-2">Organelles, Membranes, and Transport.</p>
+            </div>
+            <div class="unit-card" onclick="loadContent(2)">
+                <span class="text-[9px] font-black uppercase text-slate-400 tracking-widest">Unit 02</span>
+                <h3 class="text-xl font-black mt-1 uppercase italic">Energetics</h3>
+                <p class="text-[10px] font-bold text-slate-500 mt-2">Enzymes, ATP, and Photosynthesis.</p>
+            </div>
+            <div class="unit-card" onclick="loadContent(3)">
+                <span class="text-[9px] font-black uppercase text-slate-400 tracking-widest">Unit 03</span>
+                <h3 class="text-xl font-black mt-1 uppercase italic">Cell Cycle</h3>
+                <p class="text-[10px] font-bold text-slate-500 mt-2">Mitosis, Meiosis, and Signaling.</p>
+            </div>
+            <div class="unit-card" onclick="loadContent(4)">
+                <span class="text-[9px] font-black uppercase text-slate-400 tracking-widest">Unit 04</span>
+                <h3 class="text-xl font-black mt-1 uppercase italic">Heredity</h3>
+                <p class="text-[10px] font-bold text-slate-500 mt-2">Mendelian Genetics and Inheritance.</p>
+            </div>
+            <div class="unit-card" onclick="loadContent(5)">
+                <span class="text-[9px] font-black uppercase text-slate-400 tracking-widest">Unit 05</span>
+                <h3 class="text-xl font-black mt-1 uppercase italic">Molecular Bio</h3>
+                <p class="text-[10px] font-bold text-slate-500 mt-2">DNA Replication and Biotechnology.</p>
+            </div>
+            <div class="unit-card" onclick="loadContent(6)">
+                <span class="text-[9px] font-black uppercase text-slate-400 tracking-widest">Unit 06</span>
+                <h3 class="text-xl font-black mt-1 uppercase italic">Evolution</h3>
+                <p class="text-[10px] font-bold text-slate-500 mt-2">Natural Selection and Phylogeny.</p>
+            </div>
+            <div class="unit-card" onclick="loadContent(7)">
+                <span class="text-[9px] font-black uppercase text-slate-400 tracking-widest">Unit 07</span>
+                <h3 class="text-xl font-black mt-1 uppercase italic">Physiology</h3>
+                <p class="text-[10px] font-bold text-slate-500 mt-2">Systems of the Human Body.</p>
+            </div>
+            <div class="unit-card" onclick="loadContent(8)">
+                <span class="text-[9px] font-black uppercase text-slate-400 tracking-widest">Unit 08</span>
+                <h3 class="text-xl font-black mt-1 uppercase italic">Ecology</h3>
+                <p class="text-[10px] font-bold text-slate-500 mt-2">Populations and Biodiversity.</p>
+            </div>
+        </div>

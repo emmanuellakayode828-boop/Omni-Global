@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OMNI | Global Study Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800;900&display=swap');
+        :root { --mustard: #F4D35E; --purple: #878CD8; --raspberry: #AB273C; --charcoal: #1e293b; }
+
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--mustard); color: var(--charcoal); margin: 0; overflow-x: hidden; scroll-behavior: smooth; }
+        
+        /* INTRO ANIMATIONS */
+        #speed-container { position: absolute; inset: 0; overflow: hidden; z-index: 5; background: var(--mustard); }
+        .speed-line { position: absolute; background: linear-gradient(to right, transparent, var(--raspberry)); height: 2px; width: 200px; opacity: 0; }
+        @keyframes warp { 0% { transform: scaleX(0) translateX(100vw); opacity: 0; } 100% { transform: scaleX(3) translateX(-100vw); opacity: 0.4; } }
+
+        #loader { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; transition: opacity 0.8s; }
+        .logo-container { display: flex; align-items: center; font-size: 120px; font-weight: 900; color: var(--charcoal); letter-spacing: -0.05em; z-index: 10; }
+        .letter-o { position: relative; width: 100px; height: 100px; margin-right: 5px; display: flex; align-items: center; justify-content: center; }
+        .ring { position: absolute; inset: 0; border: 16px solid var(--charcoal); border-radius: 50%; z-index: 20; }
+        .gloobie-bot { 
+            width: 78px; height: 78px; background-color: #0ea5e9; border-radius: 50%; z-index: 10;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%2322c55e' d='M10,20 Q30,0 50,20 T80,30 Q90,60 60,70 T20,60 Z'/%3E%3Cpath fill='%2316a34a' d='M70,70 Q80,60 90,80 T70,100 Q50,90 60,80 Z'/%3E%3C/svg%3E");
+            background-size: cover; box-shadow: inset -8px -8px 15px rgba(0,0,0,0.4);
+            transform: scale(0); animation: fitIn 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.5s;
+        }
+        .glasses { position: absolute; top: 32%; left: 5%; width: 90%; height: 15px; border-top: 4px solid var(--charcoal); display: flex; justify-content: space-around; }
+        .lens { width: 22px; height: 22px; border: 4px solid var(--charcoal); background: rgba(255,255,255,0.7); border-radius: 50%; margin-top: -6px; }
+        @keyframes fitIn { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+        /* THE "PILL" UI */
+        .pill-panel { background: white; border: 4px solid var(--charcoal); border-radius: 80px; padding: 60px; box-shadow: 12px 12px 0px var(--purple); }
+        .subject-pill { background: white; border: 3px solid var(--charcoal); border-radius: 50px; padding: 30px; transition: 0.3s; cursor: pointer; text-align: center; }
+        .subject-pill:hover { transform: scale(1.05); box-shadow: 10px 10px 0px var(--raspberry); }
+        .btn-main { background: var(--raspberry); color: white; padding: 15px 40px; border-radius: 100px; font-weight: 900; text-transform: uppercase; border: 3px solid var(--charcoal); box-shadow: 5px 5px 0px var(--charcoal); transition: 0.2s; }
+        .btn-main:hover { transform: translateY(-3px); box-shadow: 8px 8px 0px var(--charcoal); }
+        .text-outline { color: transparent; -webkit-text-stroke: 2px var(--charcoal); }
+
+        /* DIALOGUE HELPER */
+        #gloobie-helper { position: fixed; bottom: 30px; right: 30px; z-index: 1000; display: flex; flex-direction: column; align-items: flex-end; }
+        .dialogue-box { background: white; border: 3px solid var(--charcoal); padding: 15px; border-radius: 30px 30px 0 30px; margin-bottom: 10px; font-weight: 800; font-size: 13px; box-shadow: 6px 6px 0px var(--purple); width: 280px; display: none; }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div id="speed-container"></div>
+        <div class="logo-container">
+            <div class="letter-o"><div class="ring"></div><div class="gloobie-bot"><div class="glasses"><div class="lens"></div><div class="lens"></div></div></div></div>
+            <div>MNI</div>
+        </div>
+        <p id="loading-text" class="mt-8 text-slate-600 font-black tracking-widest uppercase text-xs z-10">Loading Interface...</p>
+    </div>
+
+    <div id="main-content" class="hidden opacity-0 transition-opacity duration-1000">
+        
+ <nav class="max-w-6xl mx-auto p-6 md:p-12 flex justify-between items-center">
+    <div class="flex items-center gap-3 cursor-pointer" onclick="location.href='index.html'">
+        <div class="w-10 h-10 bg-[#AB273C] rounded-full flex items-center justify-center font-black text-white text-xl shadow-[2px_2px_0px_#1e293b]">O</div>
+        <span class="font-extrabold text-2xl tracking-tighter uppercase">OMNI</span>
+    </div>
+
+    <div class="hidden md:flex gap-10 font-black uppercase text-[10px] tracking-widest">
+        <a href="#subjects" class="hover:text-[#AB273C] transition">Subjects</a>
+        <a href="#practice" class="hover:text-[#AB273C] transition">Quizzes</a>
+        <a href="#about" class="hover:text-[#AB273C] transition">About Me</a>
+    </div>
+
+    <div class="flex items-center gap-6">
+        <div class="flex gap-3 border-r-2 border-slate-200 pr-6">
+            <button onclick="changeLanguage('en')" class="font-black text-[10px] hover:text-[#AB273C]">EN</button>
+            <button onclick="changeLanguage('es')" class="font-black text-[10px] hover:text-[#AB273C]">ES</button>
+            <button onclick="changeLanguage('fr')" class="font-black text-[10px] hover:text-[#AB273C]">FR</button>
+        </div>
+        <button onclick="toggleSignUp()" class="btn-main">Sign Up</button>
+    </div>
+</nav>
+
+        <section id="hero" class="max-w-6xl mx-auto p-6 md:p-12 mb-32">
+            <h1 class="text-7xl md:text-[10rem] font-black mb-10 tracking-tighter leading-[0.8]">STUDY <br><span class="text-outline italic">WITHOUT</span> <br><span class="text-[#AB273C]">LIMITS.</span></h1>
+            <p class="text-slate-700 text-2xl font-bold max-w-2xl mb-12 leading-relaxed border-l-8 border-[#AB273C] pl-8">
+                The global non-profit hub for high-yield practice. <br>
+                All subjects. SAT/ACT Prep. <span class="text-[#AB273C]">By Emmanuella Kayode.</span>
+            </p>
+            <a href="#subjects" class="btn-main inline-block">Start Learning</a>
+        </section>
+
+        <section id="subjects" class="max-w-6xl mx-auto p-6 md:p-12 mb-40">
+            <h2 class="text-5xl font-black uppercase italic mb-16 text-center">Select Your <span class="text-[#AB273C]">Domain</span></h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+               <div class="subject-pill" onclick="window.location.href='science-hub.html'">
+    <div class="text-4xl mb-4">🧬</div>
+    <h3 class="font-black text-xl uppercase">Science</h3>
+</div>
+                <div class="subject-pill">
+                    <div class="text-4xl mb-4">📐</div>
+                    <h3 class="font-black text-xl uppercase">Math</h3>
+                </div>
+                <div class="subject-pill">
+                    <div class="text-4xl mb-4">📚</div>
+                    <h3 class="font-black text-xl uppercase">English</h3>
+                </div>
+                <div class="subject-pill">
+                    <div class="text-4xl mb-4">🌎</div>
+                    <h3 class="font-black text-xl uppercase">Social</h3>
+                </div>
+            </div>
+        </section>
+
+       <section id="about" class="max-w-6xl mx-auto p-6 md:p-12 mb-40">
+            <div class="pill-panel">
+                <div class="grid md:grid-cols-2 gap-16 items-center">
+                    <div>
+                        <span class="text-[#AB273C] font-black uppercase tracking-[0.3em] text-[10px] mb-4 block">// MISSION ARCHITECT</span>
+                        <h2 class="text-6xl font-black uppercase italic mb-8 leading-none text-charcoal">The <span class="text-[#AB273C]">Founder</span></h2>
+                        
+                        <div class="space-y-6 text-xl font-bold leading-relaxed text-slate-600">
+                            <p>
+                                I am <span class="text-charcoal font-black">Emmanuella Kayode</span>, a student in the Class of 2028 and the founder of OMNI. 
+                            </p>
+                            <p>
+                                I started this project because high-quality study resources are often expensive or difficult to access. OMNI is a non-profit initiative designed to change that by providing essential academic tools to students in any location.
+                            </p>
+                            <p>
+                                Our goal is to offer high-yield practice and clear information for all major subjects, including SAT and ACT preparation. We believe that every student deserves the chance to succeed, regardless of their background or where they are studying in the world.
+                            </p>
+                        </div>
+                    <div class="relative group">
+                        <div class="absolute -inset-4 bg-[#878CD8] rounded-[80px] opacity-20 group-hover:opacity-40 transition-all"></div>
+                        
+                        <div class="relative bg-white rounded-[70px] aspect-square border-4 border-charcoal flex flex-col items-center justify-center shadow-[15px_15px_0px_#AB273C]">
+                            <div class="text-8xl mb-4">🌍</div>
+                            <div class="text-center">
+                                <span class="block font-black text-2xl tracking-tighter uppercase">Emmanuella</span>
+                                <span class="block font-black text-xs text-[#AB273C] tracking-[0.5em] uppercase">Class of 2028</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <footer class="p-20 text-center border-t-4 border-slate-800/10">
+            <p class="text-xs font-black uppercase tracking-[0.4em] text-slate-400">OMNI Hub • Engineered by Emmanuella Kayode • 2026</p>
+        </footer>
+    </div>
+
+    <div id="gloobie-helper" class="hidden">
+        <div class="dialogue-box" id="gloobie-box">
+            <div id="gloobie-response">Ready to study, Emmanuella? Click a subject to begin!</div>
+            <input type="text" id="user-input" class="w-full border-2 border-slate-800 rounded-full p-2 mt-4 text-xs outline-none" placeholder="Ask me..." onkeypress="handleInput(event)">
+        </div>
+        <div class="cursor-pointer transition hover:scale-110" onclick="toggleDialogue()">
+            <div class="gloobie-bot" style="transform: scale(1); width: 80px; height: 80px;"><div class="glasses"><div class="lens"></div><div class="lens"></div></div></div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDialogue() {
+            const box = document.getElementById('gloobie-box');
+            box.style.display = (box.style.display === 'block') ? 'none' : 'block';
+        }
+        function handleInput(e) {
+            if (e.key === 'Enter') {
+                const input = document.getElementById('user-input');
+                const response = document.getElementById('gloobie-response');
+                if (input.value.toLowerCase().includes("bio")) response.innerText = "Science is my specialty. Click the 🧬 Science pill!";
+                else response.innerText = "I'm on it! Let's explore the hub.";
+                input.value = "";
+            }
+        }
+        function showView(v) { document.getElementById('view-'+v).classList.remove('hidden'); }
+
+        const sc = document.getElementById('speed-container');
+        for (let i = 0; i < 30; i++) {
+            let l = document.createElement('div'); l.className = 'speed-line';
+            l.style.top = Math.random() * 100 + 'vh'; l.style.left = Math.random() * 100 + 'vw';
+            l.style.animation = `warp ${Math.random() * 1 + 0.4}s linear infinite`;
+            sc.appendChild(l);
+        }
+
+        window.addEventListener('load', () => {
+            setTimeout(() => { document.getElementById('loader').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('main-content').classList.remove('hidden');
+                document.getElementById('gloobie-helper').classList.remove('hidden');
+                setTimeout(() => document.getElementById('main-content').classList.add('opacity-100'), 50);
+            }, 800); }, 3200); 
+        });
+    </script> 
+    <script src="gloobie.js"></script>
+   
+    <div id="signup-overlay" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[2000] flex items-center justify-center p-6">
+    <div class="bg-white border-4 border-slate-800 rounded-[60px] p-12 max-w-md w-full shadow-[20px_20px_0px_#878CD8] text-center">
+        <h2 class="text-4xl font-black uppercase italic mb-4">Join <span class="text-[#AB273C]">OMNI</span></h2>
+        <p class="font-bold text-slate-500 mb-8 uppercase text-xs tracking-widest">Create an account to track your progress.</p>
+        
+        <input type="text" id="reg-name" placeholder="Full Name" class="w-full border-2 border-slate-800 rounded-full p-4 mb-4 outline-none font-bold">
+        <input type="email" placeholder="Email Address" class="w-full border-2 border-slate-800 rounded-full p-4 mb-8 outline-none font-bold">
+        
+        <button onclick="saveUser()" class="w-full bg-[#AB273C] text-white p-5 rounded-full font-black uppercase shadow-[6px_6px_0px_#1e293b]">Create Account</button>
+        <button onclick="toggleSignUp()" class="mt-6 text-[10px] font-black uppercase tracking-widest text-slate-400">Cancel</button>
+    </div>
+</div><div id="signup-overlay" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[2000] flex items-center justify-center p-6">
+        <div class="bg-white border-4 border-slate-800 rounded-[60px] p-12 max-w-md w-full shadow-[20px_20px_0px_#878CD8] text-center">
+            <h2 class="text-4xl font-black uppercase italic mb-4">Join <span class="text-[#AB273C]">OMNI</span></h2>
+            <p class="font-bold text-slate-500 mb-8 uppercase text-xs tracking-widest">Create an account to track your progress.</p>
+            <input type="text" id="reg-name" placeholder="Full Name" class="w-full border-2 border-slate-800 rounded-full p-4 mb-4 outline-none font-bold">
+            <input type="email" placeholder="Email Address" class="w-full border-2 border-slate-800 rounded-full p-4 mb-8 outline-none font-bold">
+            <button onclick="saveUser()" class="w-full bg-[#AB273C] text-white p-5 rounded-full font-black uppercase shadow-[6px_6px_0px_#1e293b]">Create Account</button>
+            <button onclick="toggleSignUp()" class="mt-6 text-[10px] font-black uppercase tracking-widest text-slate-400">Cancel</button>
+        </div>
+    </div>
+
+    <script src="gloobie.js"></script>
+    <script>
+        function toggleSignUp() {
+    const overlay = document.getElementById('signup-overlay');
+    overlay.classList.toggle('hidden');
+}
+
+function saveUser() {
+    const nameInput = document.getElementById('reg-name').value;
+    if(nameInput) {
+        localStorage.setItem('omniName', nameInput);
+        // We don't say "Emmanuella" here, we use the name they typed!
+        alert("Welcome to OMNI, " + nameInput + "!");
+        location.reload(); 
+    } else {
+        alert("Please enter a name!");
+    }
+}
+
+function changeLanguage(lang) {
+    localStorage.setItem('omniLang', lang);
+    location.reload();
+}
+
+        // ... keep your existing "Speed Lines" and "Loader" code here ...
+    </script> 
+   <div id="signup-overlay" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[2000] flex items-center justify-center">
+        <div class="bg-white border-4 border-slate-800 rounded-[60px] p-12 max-w-md w-full text-center">
+            <h2 class="text-4xl font-black uppercase italic mb-4">Join OMNI</h2>
+            <input type="text" id="reg-name" placeholder="Your Name" class="w-full border-2 border-slate-800 rounded-full p-4 mb-4 outline-none">
+            <button onclick="saveUser()" class="w-full bg-[#AB273C] text-white p-5 rounded-full font-black uppercase">Create Account</button>
+            <button onclick="toggleSignUp()" class="mt-4 text-[10px] font-black uppercase text-slate-400">Cancel</button>
+        </div>
+    </div>
+
+    <script src="gloobie.js"></script>
+
+    <div id="signup-overlay" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[2000] flex items-center justify-center p-6">
+        <div class="bg-white border-4 border-slate-800 rounded-[60px] p-12 max-w-md w-full shadow-[20px_20px_0px_#878CD8] text-center">
+            <h2 class="text-4xl font-black uppercase italic mb-4">Join <span class="text-[#AB273C]">OMNI</span></h2>
+            <p class="font-bold text-slate-500 mb-8 uppercase text-xs tracking-widest">Create an account to track your progress.</p>
+            <input type="text" id="reg-name" placeholder="Full Name" class="w-full border-2 border-slate-800 rounded-full p-4 mb-4 outline-none font-bold">
+            <button onclick="saveUser()" class="w-full bg-[#AB273C] text-white p-5 rounded-full font-black uppercase shadow-[6px_6px_0px_#1e293b]">Create Account</button>
+            <button onclick="toggleSignUp()" class="mt-6 text-[10px] font-black uppercase tracking-widest text-slate-400">Cancel</button>
+        </div>
+    </div>
+
+    <div id="gloobie-helper" class="hidden">
+        <div class="dialogue-box" id="gloobie-box">
+            <div id="gloobie-response">Ready to study?</div>
+            <input type="text" id="user-input" class="w-full border-2 border-slate-800 rounded-full p-2 mt-4 text-xs outline-none" onkeypress="handleInput(event)">
+        </div>
+        <div class="cursor-pointer transition hover:scale-110" onclick="toggleDialogue()">
+            <div class="gloobie-bot" style="transform: scale(1); width: 80px; height: 80px;"><div class="glasses"><div class="lens"></div><div class="lens"></div></div></div>
+        </div>
+    </div>
+
+    <div id="google_translate_element" style="display:none;"></div>
+
+    <script type="text/javascript">
+        // Google Translate Init
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en', autoDisplay: false}, 'google_translate_element');
+        }
+
+        // Translation Button Logic
+        function changeLanguage(lang) {
+            document.cookie = "googtrans=/en/" + lang + "; path=/";
+            location.reload();
+        }
+
+        // UI Logic
+        function toggleSignUp() { document.getElementById('signup-overlay').classList.toggle('hidden'); }
+        function saveUser() {
+            const name = document.getElementById('reg-name').value;
+            if(name) { localStorage.setItem('omniName', name); alert("Welcome, " + name + "!"); location.reload(); }
+        }
+        function toggleDialogue() {
+            const box = document.getElementById('gloobie-box');
+            box.style.display = (box.style.display === 'block') ? 'none' : 'block';
+        }
+        function handleInput(e) {
+            if (e.key === 'Enter') {
+                const input = document.getElementById('user-input');
+                const response = document.getElementById('gloobie-response');
+                response.innerText = input.value.toLowerCase().includes("bio") ? "Science Hub is that way! 🧬" : "I'm on it!";
+                input.value = "";
+            }
+        }
+
+        // Intro & Loader
+        const sc = document.getElementById('speed-container');
+        for (let i = 0; i < 30; i++) {
+            let l = document.createElement('div'); l.className = 'speed-line';
+            l.style.top = Math.random() * 100 + 'vh'; l.style.left = Math.random() * 100 + 'vw';
+            l.style.animation = `warp ${Math.random() * 1 + 0.4}s linear infinite`;
+            sc.appendChild(l);
+        }
+
+        window.addEventListener('load', () => {
+            setTimeout(() => { 
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loader').style.display = 'none';
+                    document.getElementById('main-content').classList.remove('hidden');
+                    document.getElementById('gloobie-helper').classList.remove('hidden');
+                    setTimeout(() => document.getElementById('main-content').classList.add('opacity-100'), 50);
+                }, 800); 
+            }, 3200); 
+        });
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>
