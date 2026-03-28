@@ -236,8 +236,15 @@ function saveUser() {
 }
 
 function changeLanguage(lang) {
-    localStorage.setItem('omniLang', lang);
+    // This sets the cookie for every possible path so it can't be missed
+    var cookieValue = "googtrans=/en/" + lang;
+    document.cookie = cookieValue + "; path=/";
+    document.cookie = cookieValue + "; path=/omni-hub"; // Add your repo name here
+    document.cookie = cookieValue + "; domain=" + window.location.hostname + "; path=/";
+    
+    // Refresh to let Google see the new cookies
     location.reload();
+}
 }
 
         // ... keep your existing "Speed Lines" and "Loader" code here ...
