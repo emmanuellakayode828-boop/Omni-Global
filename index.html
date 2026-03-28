@@ -1,6 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<style>
+    /* 1. Hides the top banner and the "Original Text" popup */
+    .goog-te-banner-frame.skiptranslate, 
+    .goog-te-gadget-icon,
+    #goog-gt-tt, 
+    .goog-te-balloon-frame { 
+        display: none !important; 
+        visibility: hidden !important; 
+    }
+
+    /* 2. Fixes the layout shift at the top of the page */
+    body { 
+        top: 0px !important; 
+        position: static !important; 
+    }
+
+    /* 3. Hides the specific "Powered by Google" text and triangle */
+    .goog-te-gadget { 
+        font-size: 0px !important; 
+        color: transparent !important; 
+    }
+    
+    .goog-te-gadget div {
+        display: none !important;
+    }
+
+    /* 4. Hides the blue highlight when you hover over translated text */
+    .goog-text-highlight { 
+        background-color: transparent !important; 
+        box-shadow: none !important; 
+    }
+</style><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OMNI | Global Study Hub</title>
