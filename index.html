@@ -204,19 +204,16 @@
     </div>
 
     <div id="google_translate_element" style="display:none;"></div>
-    <style>
-        .goog-te-banner-frame.skiptranslate { display: none !important; }
-        body { top: 0px !important; }
-    </style>
 
     <script type="text/javascript">
-        // 1. SIGN UP LOGIC
+        // 1. SIGN UP
         function toggleSignUp() {
-            document.getElementById('signup-overlay').classList.toggle('hidden');
+            var el = document.getElementById('signup-overlay');
+            if(el) el.classList.toggle('hidden');
         }
 
         function saveUser() {
-            const name = document.getElementById('reg-name').value;
+            var name = document.getElementById('reg-name').value;
             if(name) {
                 localStorage.setItem('omniName', name);
                 alert("Welcome, " + name + "!");
@@ -224,45 +221,19 @@
             }
         }
 
-        // 2. TRANSLATION LOGIC
+        // 2. TRANSLATE
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({pageLanguage: 'en', autoDisplay: false}, 'google_translate_element');
         }
 
         function changeLanguage(lang) {
-            // This is the aggressive cookie method for GitHub
-            document.cookie = "googtrans=/en/" + lang + "; path=/; domain=" + window.location.hostname;
             document.cookie = "googtrans=/en/" + lang + "; path=/";
+            document.cookie = "googtrans=/en/" + lang + "; path=/; domain=" + window.location.hostname;
             location.reload();
         }
-
-        // 3. GLOOBIE & INTRO LOGIC
-        function toggleDialogue() {
-            const box = document.getElementById('gloobie-box');
-            if(box) box.style.display = (box.style.display === 'block') ? 'none' : 'block';
-        }
-
-        // Speed Line Generator
-        const sc = document.getElementById('speed-container');
-        for (let i = 0; i < 30; i++) {
-            let l = document.createElement('div'); l.className = 'speed-line';
-            l.style.top = Math.random() * 100 + 'vh'; l.style.left = Math.random() * 100 + 'vw';
-            l.style.animation = `warp ${Math.random() * 1 + 0.4}s linear infinite`;
-            sc.appendChild(l);
-        }
-
-        window.addEventListener('load', () => {
-            setTimeout(() => { 
-                document.getElementById('loader').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('loader').style.display = 'none';
-                    document.getElementById('main-content').classList.remove('hidden');
-                    document.getElementById('gloobie-helper').classList.remove('hidden');
-                    setTimeout(() => document.getElementById('main-content').classList.add('opacity-100'), 50);
-                }, 800); 
-            }, 3200); 
-        });
     </script>
+    
     <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script src="gloobie.js"></script>
 </body>
 </html>
