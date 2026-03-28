@@ -282,16 +282,30 @@ function changeLanguage(lang) {
 
     <div id="google_translate_element" style="display:none;"></div>
 
-    <script type="text/javascript">
-        // Google Translate Init
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'en', autoDisplay: false}, 'google_translate_element');
-        }
+    <div id="google_translate_element" style="display:none;"></div>
 
-        // Translation Button Logic
-        function changeLanguage(lang) {
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en', 
+            autoDisplay: false
+        }, 'google_translate_element');
+    }
+
+    function changeLanguage(lang) {
+        // This looks for the hidden Google selector and forces it to change
+        var selectField = document.querySelector("#google_translate_element select");
+        if (selectField) {
+            selectField.value = lang;
+            selectField.dispatchEvent(new Event('change'));
+        } else {
+            // Backup: If the selector isn't ready, use the cookie method
             document.cookie = "googtrans=/en/" + lang + "; path=/";
             location.reload();
+        }
+    }
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
         }
 
         // UI Logic
