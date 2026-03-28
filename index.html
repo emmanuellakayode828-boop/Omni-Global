@@ -194,140 +194,55 @@
     </script> 
     <script src="gloobie.js"></script>
    
-    <div id="signup-overlay" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[2000] flex items-center justify-center p-6">
-    <div class="bg-white border-4 border-slate-800 rounded-[60px] p-12 max-w-md w-full shadow-[20px_20px_0px_#878CD8] text-center">
-        <h2 class="text-4xl font-black uppercase italic mb-4">Join <span class="text-[#AB273C]">OMNI</span></h2>
-        <p class="font-bold text-slate-500 mb-8 uppercase text-xs tracking-widest">Create an account to track your progress.</p>
-        
-        <input type="text" id="reg-name" placeholder="Full Name" class="w-full border-2 border-slate-800 rounded-full p-4 mb-4 outline-none font-bold">
-        <input type="email" placeholder="Email Address" class="w-full border-2 border-slate-800 rounded-full p-4 mb-8 outline-none font-bold">
-        
-        <button onclick="saveUser()" class="w-full bg-[#AB273C] text-white p-5 rounded-full font-black uppercase shadow-[6px_6px_0px_#1e293b]">Create Account</button>
-        <button onclick="toggleSignUp()" class="mt-6 text-[10px] font-black uppercase tracking-widest text-slate-400">Cancel</button>
-    </div>
-</div><div id="signup-overlay" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[2000] flex items-center justify-center p-6">
+ <div id="signup-overlay" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[2000] flex items-center justify-center p-6">
         <div class="bg-white border-4 border-slate-800 rounded-[60px] p-12 max-w-md w-full shadow-[20px_20px_0px_#878CD8] text-center">
             <h2 class="text-4xl font-black uppercase italic mb-4">Join <span class="text-[#AB273C]">OMNI</span></h2>
-            <p class="font-bold text-slate-500 mb-8 uppercase text-xs tracking-widest">Create an account to track your progress.</p>
             <input type="text" id="reg-name" placeholder="Full Name" class="w-full border-2 border-slate-800 rounded-full p-4 mb-4 outline-none font-bold">
-            <input type="email" placeholder="Email Address" class="w-full border-2 border-slate-800 rounded-full p-4 mb-8 outline-none font-bold">
             <button onclick="saveUser()" class="w-full bg-[#AB273C] text-white p-5 rounded-full font-black uppercase shadow-[6px_6px_0px_#1e293b]">Create Account</button>
             <button onclick="toggleSignUp()" class="mt-6 text-[10px] font-black uppercase tracking-widest text-slate-400">Cancel</button>
         </div>
     </div>
 
-    <script src="gloobie.js"></script>
-    <script>
+    <div id="google_translate_element" style="display:none;"></div>
+    <style>
+        .goog-te-banner-frame.skiptranslate { display: none !important; }
+        body { top: 0px !important; }
+    </style>
+
+    <script type="text/javascript">
+        // 1. SIGN UP LOGIC
         function toggleSignUp() {
-    const overlay = document.getElementById('signup-overlay');
-    overlay.classList.toggle('hidden');
-}
-
-function saveUser() {
-    const nameInput = document.getElementById('reg-name').value;
-    if(nameInput) {
-        localStorage.setItem('omniName', nameInput);
-        // We don't say "Emmanuella" here, we use the name they typed!
-        alert("Welcome to OMNI, " + nameInput + "!");
-        location.reload(); 
-    } else {
-        alert("Please enter a name!");
-    }
-}
-
-function changeLanguage(lang) {
-    // This sets the cookie for every possible path so it can't be missed
-    var cookieValue = "googtrans=/en/" + lang;
-    document.cookie = cookieValue + "; path=/";
-    document.cookie = cookieValue + "; path=/omni-hub"; // Add your repo name here
-    document.cookie = cookieValue + "; domain=" + window.location.hostname + "; path=/";
-    
-    // Refresh to let Google see the new cookies
-    location.reload();
-}
-}
-
-        // ... keep your existing "Speed Lines" and "Loader" code here ...
-    </script> 
-   <div id="signup-overlay" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[2000] flex items-center justify-center">
-        <div class="bg-white border-4 border-slate-800 rounded-[60px] p-12 max-w-md w-full text-center">
-            <h2 class="text-4xl font-black uppercase italic mb-4">Join OMNI</h2>
-            <input type="text" id="reg-name" placeholder="Your Name" class="w-full border-2 border-slate-800 rounded-full p-4 mb-4 outline-none">
-            <button onclick="saveUser()" class="w-full bg-[#AB273C] text-white p-5 rounded-full font-black uppercase">Create Account</button>
-            <button onclick="toggleSignUp()" class="mt-4 text-[10px] font-black uppercase text-slate-400">Cancel</button>
-        </div>
-    </div>
-
-    <script src="gloobie.js"></script>
-
-    <div id="signup-overlay" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-[2000] flex items-center justify-center p-6">
-        <div class="bg-white border-4 border-slate-800 rounded-[60px] p-12 max-w-md w-full shadow-[20px_20px_0px_#878CD8] text-center">
-            <h2 class="text-4xl font-black uppercase italic mb-4">Join <span class="text-[#AB273C]">OMNI</span></h2>
-            <p class="font-bold text-slate-500 mb-8 uppercase text-xs tracking-widest">Create an account to track your progress.</p>
-            <input type="text" id="reg-name" placeholder="Full Name" class="w-full border-2 border-slate-800 rounded-full p-4 mb-4 outline-none font-bold">
-            <button onclick="saveUser()" class="w-full bg-[#AB273C] text-white p-5 rounded-full font-black uppercase shadow-[6px_6px_0px_#1e293b]">Create Account</button>
-            <button onclick="toggleSignUp()" class="mt-6 text-[10px] font-black uppercase tracking-widest text-slate-400">Cancel</button>
-        </div>
-    </div>
-
-    <div id="gloobie-helper" class="hidden">
-        <div class="dialogue-box" id="gloobie-box">
-            <div id="gloobie-response">Ready to study?</div>
-            <input type="text" id="user-input" class="w-full border-2 border-slate-800 rounded-full p-2 mt-4 text-xs outline-none" onkeypress="handleInput(event)">
-        </div>
-        <div class="cursor-pointer transition hover:scale-110" onclick="toggleDialogue()">
-            <div class="gloobie-bot" style="transform: scale(1); width: 80px; height: 80px;"><div class="glasses"><div class="lens"></div><div class="lens"></div></div></div>
-        </div>
-    </div>
-
-    <div id="google_translate_element" style="display:none;"></div>
-
-    <div id="google_translate_element" style="display:none;"></div>
-
-<script type="text/javascript">
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-            pageLanguage: 'en', 
-            autoDisplay: false
-        }, 'google_translate_element');
-    }
-
-    function changeLanguage(lang) {
-        // This looks for the hidden Google selector and forces it to change
-        var selectField = document.querySelector("#google_translate_element select");
-        if (selectField) {
-            selectField.value = lang;
-            selectField.dispatchEvent(new Event('change'));
-        } else {
-            // Backup: If the selector isn't ready, use the cookie method
-            document.cookie = "googtrans=/en/" + lang + "; path=/";
-            location.reload();
-        }
-    }
-</script>
-<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+            document.getElementById('signup-overlay').classList.toggle('hidden');
         }
 
-        // UI Logic
-        function toggleSignUp() { document.getElementById('signup-overlay').classList.toggle('hidden'); }
         function saveUser() {
             const name = document.getElementById('reg-name').value;
-            if(name) { localStorage.setItem('omniName', name); alert("Welcome, " + name + "!"); location.reload(); }
-        }
-        function toggleDialogue() {
-            const box = document.getElementById('gloobie-box');
-            box.style.display = (box.style.display === 'block') ? 'none' : 'block';
-        }
-        function handleInput(e) {
-            if (e.key === 'Enter') {
-                const input = document.getElementById('user-input');
-                const response = document.getElementById('gloobie-response');
-                response.innerText = input.value.toLowerCase().includes("bio") ? "Science Hub is that way! 🧬" : "I'm on it!";
-                input.value = "";
+            if(name) {
+                localStorage.setItem('omniName', name);
+                alert("Welcome, " + name + "!");
+                toggleSignUp();
             }
         }
 
-        // Intro & Loader
+        // 2. TRANSLATION LOGIC
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en', autoDisplay: false}, 'google_translate_element');
+        }
+
+        function changeLanguage(lang) {
+            // This is the aggressive cookie method for GitHub
+            document.cookie = "googtrans=/en/" + lang + "; path=/; domain=" + window.location.hostname;
+            document.cookie = "googtrans=/en/" + lang + "; path=/";
+            location.reload();
+        }
+
+        // 3. GLOOBIE & INTRO LOGIC
+        function toggleDialogue() {
+            const box = document.getElementById('gloobie-box');
+            if(box) box.style.display = (box.style.display === 'block') ? 'none' : 'block';
+        }
+
+        // Speed Line Generator
         const sc = document.getElementById('speed-container');
         for (let i = 0; i < 30; i++) {
             let l = document.createElement('div'); l.className = 'speed-line';
@@ -348,6 +263,6 @@ function changeLanguage(lang) {
             }, 3200); 
         });
     </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
