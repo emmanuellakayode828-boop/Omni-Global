@@ -1,6 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<style>
+<style/* KILL THE GOOGLE WIDGET COMPLETELY */
+#google_translate_element, 
+.skiptranslate, 
+.goog-te-gadget, 
+.goog-te-banner-frame, 
+#goog-gt-tt, 
+.goog-te-balloon-frame,
+.goog-te-menu-value,
+.goog-te-menu-frame {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    position: absolute !important;
+    left: -9999px !important;
+}
+
+/* Fix the white space at the top */
+body { 
+    top: 0px !important; 
+    position: static !important; 
+}>
     /* 1. Hides the top banner and the "Original Text" popup */
     .goog-te-banner-frame.skiptranslate, 
     .goog-te-gadget-icon,
